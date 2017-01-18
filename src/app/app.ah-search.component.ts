@@ -1,12 +1,12 @@
 import { Component, Input, OnInit }	from '@angular/core';
-import { Observable }				from 'rxjs/Observable';
-import { Subject }					from 'rxjs/Subject';
-import { BehaviorSubject }			from 'rxjs/BehaviorSubject';
-import { AhSearchService }			from './app.ah-search.service';
-import has							from 'lodash/has';
-import unionBy						from 'lodash/unionBy';
-import flatten						from 'lodash/flatten';
-import concat						from 'lodash/concat';
+import { Observable }			from 'rxjs/Observable';
+import { Subject }			from 'rxjs/Subject';
+import { BehaviorSubject }		from 'rxjs/BehaviorSubject';
+import { AhSearchService }		from './app.ah-search.service';
+import has				from 'lodash/has';
+import unionBy				from 'lodash/unionBy';
+import flatten				from 'lodash/flatten';
+import concat				from 'lodash/concat';
 
 @Component({
 	selector: 'ah-search',
@@ -43,8 +43,6 @@ export class AhSearchComponent implements OnInit {
 			event.stopPropagation();
 			return;
 		}
-
-		console.debug('id / level', ah.id, ah.level);
 
 		ah.loadingState = true;
 		this.ahSearchService.mpsSearch(ah.id, ah.level)
@@ -92,9 +90,6 @@ export class AhSearchComponent implements OnInit {
 	mpsSearchResultDeliver(res, ah): void {
 		// Own ajax-loader image
 		ah.loadingState = false;
-
-		console.debug('param:', ah.id);
-		console.debug('res:', res);
 
 		// If new three data potentially has come
 		// we need to push changed to updatedItems observable stream
@@ -154,8 +149,6 @@ export class AhSearchComponent implements OnInit {
 		if (ah.level === 3 && !Object.keys(ah.nettingGroups).length) {
 			ah.nettingGroups.empty = true;
 		}
-
-		console.debug('ah:', ah);
 	}
 
 	ngOnInit(): void {
@@ -182,10 +175,6 @@ export class AhSearchComponent implements OnInit {
 				}),
 			this.updatedItems.asObservable()
 		).subscribe((data: any) => {
-			console.debug('data came out:', data);
-			console.debug('data came res unionBy flatten:', unionBy(flatten(data), 'id'));
-			console.debug('baseCacheChangeState', this.baseCacheChangeState);
-
 			// @hack preventing messing of data three
 			if (this.baseCacheChangeState === 'updated') {
 				this.ahs = Observable.of(data[1]);
