@@ -1,0 +1,81 @@
+/* @todo mb we cound use post-css ? */
+
+.search-result {
+  cursor: pointer;
+  display: inline;
+  line-height: 20px;
+}
+.search-result.im {
+  padding-left: 1em;
+}
+.search-result.cr:before,
+.search-result.im:before {
+  content: '\2023';
+}
+.search-result.f {
+  padding-left: 2em;
+}
+.search-result.f:before {
+  content: '\2022';
+}
+.search-result.f > ul {
+  padding-left: 4em;
+}
+.search-result-wrap {
+  display: inline-block;
+  padding-left: 0;
+}
+
+#query-search {
+  width: 100%;
+  -ms-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  line-height: 1.5;
+}
+
+.input-query {
+  position: relative;
+}
+
+.query-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  width: 202px;
+  border-top: 0;
+}
+.query-dropdown li {
+  line-height: 1.5;
+}
+.query-dropdown li:hover {
+  cursor: pointer;
+  background: yellow;
+}
+
+.ajax-load {
+  display: inline-block;
+  vertical-align: top;
+  width: 20px;
+  height: 20px;
+  background: url(http://localhost:8090/mcs-mcat-web-ui/js/dijit/icons/images/loadingAnimation_rtl.gif) top left no-repeat;
+}
+#ah-search > .ajax-load {
+  display: block;
+}
+.gfcid-bg > i {
+  background: #eee;
+  font-style: normal;
+}
+.status-live-bg > i {
+  background: #d9534f;
+  color: #fff;
+  text-transform: lowercase;
+  font-style: normal;
+}

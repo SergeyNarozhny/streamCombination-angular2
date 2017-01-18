@@ -1,0 +1,32 @@
+<div id="ah-search">
+	<div class="input-query">
+		<input #querySearch id="query-search" (keyup)="search(querySearch.value)" [(ngModel)]="query" autofocus />
+		<ul class="query-dropdown" [hidden]="!ahSearchService.loadingState">
+			<li *ngFor="let drop of dropdownList" (click)="resetQuery(drop)">
+				{{drop}}
+			</li>
+		</ul>
+	</div>
+	<div class="ajax-load" *ngIf="ahSearchService.loadingState"></div>
+	<ul class="search-result-wrap">
+		<li *ngFor="let ah of ahs | async" [ngClass]="['search-result', ah.type || '']" (click)="mpsSearch(ah, $event)">
+			{{ah.type | uppercase}}: {{ah.name | lowercase}}
+			<span *ngIf="ah.gfcId" class="gfcid-bg">&nbsp;<i>({{ah.gfcId}})</i></span>
+			<div class="ajax-load" *ngIf="ah.loadingState"></div>
+			<ul>
+				<span *ngIf="ah.nettingGroups.empty" class="gfcid-bg">No Netting Groups found</span>
+				<li *ngFor="let ng of ah.getKeys(ah.nettingGroups)" [hidden]="ah.nettingGroups.empty">
+					{{ah.nettingGroups[ng].name}}
+					<span *ngIf="ah.nettingGroups[ng].id" class="gfcid-bg">&nbsp;<i>({{ah.nettingGroups[ng].id}})</i></span>
+					<span *ngIf="ah.nettingGroups[ng].status" class="status-live-bg">&nbsp;<i>{{ah.nettingGroups[ng].status}}</i></span>
+					<span *ngIf="ah.nettingGroups[ng].count" class="gfcid-bg">&nbsp;<i>{{ah.nettingGroups[ng].count}}</i></span>
+					<ul><li *ngFor="let mg of ah.nettingGroups[ng].marginGroups"  [hidden]="!mg.name">
+						{{mg.name}}
+						<span *ngIf="mg.count" class="gfcid-bg">&nbsp;<i>{{mg.count}}</i></span>
+					</li></ul>
+				</li>
+			</ul>
+		</li>
+		<span *ngIf="(ahs | async).length === 0" class="gfcid-bg">No data found</span>
+	</ul>
+</div>
