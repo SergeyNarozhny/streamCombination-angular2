@@ -64,7 +64,7 @@
   vertical-align: top;
   width: 20px;
   height: 20px;
-  background: url(http://localhost:8090/mcs-mcat-web-ui/js/dijit/icons/images/loadingAnimation_rtl.gif) top left no-repeat;
+  background: url(/images/loadingAnimation_rtl.gif) top left no-repeat;
 }
 #ah-search > .ajax-load {
   display: block;
