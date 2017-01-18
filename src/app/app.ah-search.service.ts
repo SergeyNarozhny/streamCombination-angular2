@@ -1,6 +1,6 @@
 import { Injectable, Output, EventEmitter }	from '@angular/core';
-import { Http, Response, Headers }			from '@angular/http';
-import { Observable }						from 'rxjs';
+import { Http, Response, Headers }		from '@angular/http';
+import { Observable }				from 'rxjs';
 
 @Injectable()
 export class AhSearchService {
@@ -22,10 +22,10 @@ export class AhSearchService {
 
 	returnUrls(options): string {
 		if (options.type === 'base') {
-			return `/mcs-mcat-web-ui/ui/ah?search=${options.query}`;
+			return `/ui/ah?search=${options.query}`;
 		}
 		else if (options.type === 'mps') {
-			return `/mcs-mcat-web-ui/ui/mpsClient/${options.param}/${options.level}`;
+			return `/ui/mpsClient/${options.param}/${options.level}`;
 		}
 		else {
 			return ``;
@@ -35,7 +35,6 @@ export class AhSearchService {
 	// Base input query search with caching
 	search(query: string): Observable<Object[]> {
 		if (this.cache.base[query]) {
-			console.debug('search from cache:', this.cache.base[query]);
 			this.loadingState = false;
 
 			// Base request has changed, emit event
@@ -44,7 +43,6 @@ export class AhSearchService {
 			return Observable.of(this.cache.base[query]);
 		}
 		else {
-			console.debug('search');
 			this.loadingState = true;
 			return this.http
 				.get(this.returnUrls({ type: 'base', query: query }), {
@@ -61,7 +59,6 @@ export class AhSearchService {
 	// Mps funds search, based on click
 	mpsSearch(param: string | number, level: number): Promise<any> {
 		if (this.cache.mps[param]) {
-			console.debug('from cache:', this.cache.mps);
 			return Promise.resolve(this.cache.mps[param]);
 		}
 		else {
@@ -141,7 +138,6 @@ export class AhSearchService {
 			});
 		});
 
-		console.debug('item:', item);
 		return item;
 	}
 }
